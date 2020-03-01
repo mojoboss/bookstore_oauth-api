@@ -1,4 +1,4 @@
-package src
+package main
 
 import "github.com/mojoboss/bookstore_oauth-api/src/app"
 

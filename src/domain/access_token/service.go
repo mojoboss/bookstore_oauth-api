@@ -1,7 +1,6 @@
 package access_token
 
 import (
-	"github.com/mojoboss/bookstore_oauth-api/src/repository/db"
 	"github.com/mojoboss/bookstore_users-api/utils/errors"
 )
 
@@ -9,11 +8,15 @@ type Service interface {
 	GetById(string) (*AccessToken, *errors.RestErr)
 }
 
-type service struct {
-	repository db.DbRepository
+type Repository interface {
+	GetById(string) (*AccessToken, *errors.RestErr)
 }
 
-func NewService(repo db.DbRepository) Service {
+type service struct {
+	repository Repository
+}
+
+func NewService(repo Repository) Service {
 	return &service{
 		repository: repo,
 	}
