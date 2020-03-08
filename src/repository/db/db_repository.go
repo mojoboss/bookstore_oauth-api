@@ -1,6 +1,7 @@
 package db
 
 import (
+	"github.com/gocql/gocql"
 	"github.com/mojoboss/bookstore_oauth-api/src/clients/cassandra"
 	"github.com/mojoboss/bookstore_oauth-api/src/domain/access_token"
 	"github.com/mojoboss/bookstore_users-api/utils/errors"
@@ -31,7 +32,19 @@ func (r *dbRepository) GetById(id string) (*access_token.AccessToken, *errors.Re
 		panic(err)
 	}
 	defer session.Close()
-	return nil, errors.NewInternalServerError("Database connection not found")
+	var result access_token.AccessToken
+	if err = session.Query(queryGetAccessToken, id).Scan(
+		&result.AccessToken,
+		&result.UserId,
+		&result.ClientId,
+		&result.Expires,
+	); err != nil {
+		if err == gocql.ErrNotFound {
+			return nil, errors.NewNotFoundError("no access token found with given id")
+		}
+		return nil, errors.NewInternalServerError("error when trying to get current id")
+	}
+	return &result, nil
 }
 
 func (r *dbRepository) Create(at access_token.AccessToken) *errors.RestErr {
