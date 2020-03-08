@@ -13,5 +13,6 @@ func init() {
 }
 
 func GetSession() (*gocql.Session, error) {
+	cluster.CreateSession()
 	return cluster.CreateSession()
 }
