@@ -3,16 +3,20 @@ package cassandra
 import "github.com/gocql/gocql"
 
 var (
-	cluster *gocql.ClusterConfig
+	Session *gocql.Session
 )
 
 func init() {
-	cluster = gocql.NewCluster("127.0.0.1")
+	cluster := gocql.NewCluster("127.0.0.1")
 	cluster.Keyspace = "oauth"
 	cluster.Consistency = gocql.Quorum
+	var err error
+	Session, err = cluster.CreateSession()
+	if err != nil {
+		panic(err)
+	}
 }
 
-func GetSession() (*gocql.Session, error) {
-	cluster.CreateSession()
-	return cluster.CreateSession()
+func GetSession() *gocql.Session {
+	return Session
 }
