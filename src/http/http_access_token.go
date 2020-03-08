@@ -3,6 +3,7 @@ package http
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/mojoboss/bookstore_oauth-api/src/domain/access_token"
+	"github.com/mojoboss/bookstore_oauth-api/src/services"
 	"github.com/mojoboss/bookstore_users-api/utils/errors"
 	"net/http"
 	"strings"
@@ -14,10 +15,10 @@ type AccessTokenHandler interface {
 }
 
 type accessTokenHandler struct {
-	service access_token.Service
+	service services.Service
 }
 
-func NewHandler(service access_token.Service) AccessTokenHandler {
+func NewHandler(service services.Service) AccessTokenHandler {
 	return &accessTokenHandler{
 		service: service,
 	}
