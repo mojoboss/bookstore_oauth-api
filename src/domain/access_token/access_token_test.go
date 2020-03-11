@@ -7,7 +7,7 @@ import (
 )
 
 func TestAccessTokenConstants(t *testing.T) {
-	assert.EqualValues(t, 24, expirationTime, "expiration time should be 24 hours")
+	assert.EqualValues(t, 24, ExpirationTime, "expiration time should be 24 hours")
 }
 
 func TestGetNewAccessToken(t *testing.T) {
