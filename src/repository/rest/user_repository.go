@@ -3,7 +3,7 @@ package rest
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/mojoboss/bookstore_users-api/domain/users"
+	"github.com/mojoboss/bookstore_oauth-api/src/domain/users"
 	"github.com/mojoboss/bookstore_users-api/utils/errors"
 	"net/http"
 )
@@ -19,7 +19,7 @@ func NewRestUsersRepository() RestUsersRepository {
 }
 
 func (r *usersRepository) LoginUser(email string, password string) (*users.User, *errors.RestErr) {
-	request := users.LoginRequest{
+	request := users.UserLoginRequest{
 		Email:    email,
 		Password: password,
 	}
